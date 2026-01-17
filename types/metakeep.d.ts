@@ -64,6 +64,7 @@ declare class MetaKeep {
    * @param reason - Reason for signing (shown to user)
    * @returns Promise with signed transaction
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   signTransaction(
     transaction: any,
     reason: string

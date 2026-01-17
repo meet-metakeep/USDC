@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
       const tokenAccountInfo = await getAccount(connection, tokenAccountAddress);
       // USDC has 6 decimals
       usdcBalance = Number(tokenAccountInfo.amount) / 10 ** 6;
-    } catch (error) {
+    } catch {
       // Token account doesn't exist yet (no USDC balance)
       console.log("Token account not found, balance is 0");
     }
