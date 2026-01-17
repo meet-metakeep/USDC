@@ -37,13 +37,6 @@ interface MetaKeepWalletResponse {
 }
 
 /**
- * Solana transaction object
- */
-interface SolanaTransaction {
-  transaction: string; // Base64 encoded transaction
-}
-
-/**
  * Transaction response from MetaKeep SDK
  */
 interface TransactionResponse {
@@ -67,12 +60,12 @@ declare class MetaKeep {
 
   /**
    * Sign a Solana transaction
-   * @param transaction - Solana transaction object
+   * @param transaction - Solana transaction object (accepts VersionedTransaction, Transaction, or any transaction object)
    * @param reason - Reason for signing (shown to user)
    * @returns Promise with signed transaction
    */
   signTransaction(
-    transaction: SolanaTransaction,
+    transaction: any,
     reason: string
   ): Promise<TransactionResponse>;
 }
@@ -82,6 +75,5 @@ export {
   MetaKeepConfigWithUser,
   MetaKeepUser,
   MetaKeepWalletResponse,
-  SolanaTransaction,
   TransactionResponse,
 };
