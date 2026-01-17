@@ -102,6 +102,10 @@ export default function Home() {
   const [sendAmount, setSendAmount] = useState("1.00");
   const [isSending, setIsSending] = useState(false);
   const [isFetchingAddress, setIsFetchingAddress] = useState(false);
+  
+  // Faucet state - COMMENTED OUT: Faucet functionality disabled
+  // const [isClaiming, setIsClaiming] = useState(false);
+  // const [claimAmount, setClaimAmount] = useState<2 | 5 | 10>(2);
 
   // QR code state
   const [qrCodeUrl, setQrCodeUrl] = useState("");
@@ -706,6 +710,84 @@ export default function Home() {
   };
 
   /**
+   * Handle USDC claim from faucet
+   * COMMENTED OUT: Faucet functionality disabled
+   */
+  /*
+  const handleClaimUsdc = async () => {
+    if (!wallet) {
+      showToast({
+        kind: "error",
+        message: "Please connect your wallet first",
+      });
+      return;
+    }
+
+    try {
+      setIsClaiming(true);
+
+      // Call the claim API
+      const response = await fetch("/api/claim", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address: wallet.address,
+          amount: claimAmount,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to claim USDC");
+      }
+
+      const data = await response.json();
+
+      if (data.ok && data.usdcTx) {
+        showToast({
+          kind: "success",
+          message: `Successfully claimed ${claimAmount} USDC!`,
+          actionLabel: "View",
+          actionHref: data.usdcTx.url,
+        });
+
+        // Refresh wallet balances after a short delay
+        setTimeout(async () => {
+          if (wallet.address) {
+            const balances = await fetchBalances(wallet.address);
+            setWallet((prev) => {
+              if (!prev) return null;
+              const next = {
+                ...prev,
+                solBalance: balances.solBalance,
+                usdcBalance: balances.usdcBalance,
+                usdValue: balances.usdcBalance,
+              };
+              localStorage.setItem("walletData", JSON.stringify(next));
+              return next;
+            });
+          }
+        }, 2000);
+      } else {
+        throw new Error("Claim response invalid");
+      }
+    } catch (error) {
+      console.error("Failed to claim USDC:", error);
+      showToast({
+        kind: "error",
+        message: `Claim failed: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+      });
+    } finally {
+      setIsClaiming(false);
+    }
+  };
+  */
+
+  /**
    * Handle logout - clear wallet and cache
    */
   const handleLogout = () => {
@@ -821,12 +903,9 @@ export default function Home() {
         <div className="px-6 mb-4">
           <Button
             className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:opacity-90 text-white font-semibold py-5 rounded-2xl text-base shadow-lg shadow-blue-600/30 transition-all"
-            onClick={() =>
-              showToast({
-                kind: "info",
-                message: "USDC deployed on Solana Devnet!",
-              })
-            }
+            onClick={() => {
+              window.open("https://faucet.circle.com/", "_blank");
+            }}
           >
             <ShoppingCart className="w-5 h-5 mr-2" />
             GET USDC

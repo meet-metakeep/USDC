@@ -27,10 +27,11 @@ const RPC_URL =
 
 /**
  * USDC mint address on Solana devnet
+ * Updated to use devnet USDC token: 4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU
  */
 const USDC_MINT_ADDRESS =
   process.env.NEXT_PUBLIC_USDC_MINT_ADDRESS ||
-  "6a3ytKTopkEyymNB1MsKkGKUHP6J3oafHMzkSBpTKRfd";
+  "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
 
 /**
  * Handle POST request to create a USDC transfer transaction
